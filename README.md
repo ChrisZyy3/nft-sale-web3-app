@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment variables
+
+Wallet connectivity relies on WalletConnect v2. Create a project at [cloud.walletconnect.com](https://cloud.walletconnect.com) and expose the generated Project ID to the app. During local development add a `.env.local` file in the project root that contains:
+
+```
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+```
+
+The repository ships with a shared reOwn project ID (`11cf43f9159b72fb3a1ca6a26a599305`) so the app works out of the box, but you can override it at any time by defining the variable above. Without a valid Project ID, the MetaMask option in the RainbowKit modal cannot open the wallet on mobile and WalletConnect-compatible EVM wallets will fail to connect. The bundled Wagmi configuration targets Ethereum mainnet, Base, and Arbitrum so the wallet selector focuses on the primary EVM networks in scope.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
