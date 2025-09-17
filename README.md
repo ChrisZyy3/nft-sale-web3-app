@@ -28,7 +28,7 @@ Wallet connectivity relies on WalletConnect v2. Create a project at [cloud.walle
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
 ```
 
-Without a valid Project ID, the MetaMask option in the RainbowKit modal cannot open the wallet on mobile and WalletConnect-compatible EVM wallets will fail to connect.
+The repository ships with a shared reOwn project ID (`11cf43f9159b72fb3a1ca6a26a599305`) so the app works out of the box, but you can override it at any time by defining the variable above. Without a valid Project ID, the MetaMask option in the RainbowKit modal cannot open the wallet on mobile and WalletConnect-compatible EVM wallets will fail to connect.
 
 ## Learn More
 

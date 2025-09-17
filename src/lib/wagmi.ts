@@ -1,11 +1,14 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { arbitrum, base, bsc, mainnet, optimism, polygon, sepolia } from "wagmi/chains";
 
-const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+const fallbackProjectId = "11cf43f9159b72fb3a1ca6a26a599305";
 
-if (!walletConnectProjectId || /^0+$/.test(walletConnectProjectId)) {
+const walletConnectProjectId =
+  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID?.trim() || fallbackProjectId;
+
+if (/^0+$/.test(walletConnectProjectId)) {
   throw new Error(
-    "Missing NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID. Generate a WalletConnect Cloud project ID and expose it as NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID to enable MetaMask and other EVM wallets.",
+    "Invalid NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID. Generate a WalletConnect Cloud project ID and expose it as NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID to enable MetaMask and other EVM wallets.",
   );
 }
 
