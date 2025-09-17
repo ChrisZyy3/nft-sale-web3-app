@@ -1,4 +1,11 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
+import {
+  metaMaskWallet,
+  walletConnectWallet,
+  coinbaseWallet,
+  injectedWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import { createConfig, http } from "wagmi";
 import { arbitrum, base, mainnet } from "wagmi/chains";
 
 const fallbackProjectId = "11cf43f9159b72fb3a1ca6a26a599305";
@@ -14,11 +21,30 @@ if (/^0+$/.test(walletConnectProjectId)) {
 
 const chains = [mainnet, base, arbitrum] as const;
 
-// RainbowKit provides a helper to create a Wagmi config with sensible defaults
-export const wagmiConfig = getDefaultConfig({
-  appName: "NFT Sale DApp",
-  projectId: walletConnectProjectId,
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [
+      metaMaskWallet({
+        projectId: walletConnectProjectId,
+        chains,
+        extensionOnly: true,
+      }),
+      coinbaseWallet({ appName: "NFT Sale DApp", chains }),
+      injectedWallet({ chains, shimDisconnect: true }),
+      walletConnectWallet({ projectId: walletConnectProjectId, chains }),
+    ],
+  },
+]);
+
+export const wagmiConfig = createConfig({
   chains,
+  connectors,
   ssr: true,
+  transports: {
+    [mainnet.id]: http(),
+    [base.id]: http(),
+    [arbitrum.id]: http(),
+  },
 });
 
