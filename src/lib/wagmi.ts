@@ -23,23 +23,28 @@ if (/^0+$/.test(walletConnectProjectId)) {
 
 const chains = [mainnet, base, arbitrum] as const;
 
-const connectors = connectorsForWallets([
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: "Recommended",
+      wallets: [
+        (walletOptions) =>
+          metaMaskWallet({
+            ...walletOptions,
+          }),
+        rabbyWallet,
+        okxWallet,
+        (walletOptions) => coinbaseWallet(walletOptions),
+        injectedWallet,
+        walletConnectWallet,
+      ],
+    },
+  ],
   {
-    groupName: "Recommended",
-    wallets: [
-      metaMaskWallet({
-        projectId: walletConnectProjectId,
-        chains,
-        extensionOnly: true,
-      }),
-      rabbyWallet(),
-      okxWallet({ projectId: walletConnectProjectId, chains }),
-      coinbaseWallet({ appName: "NFT Sale DApp", chains }),
-      injectedWallet({ chains, shimDisconnect: true }),
-      walletConnectWallet({ projectId: walletConnectProjectId, chains }),
-    ],
+    appName: "Hash Butterfly",
+    projectId: walletConnectProjectId,
   },
-]);
+);
 
 export const wagmiConfig = createConfig({
   chains,
