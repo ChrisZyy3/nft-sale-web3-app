@@ -1,5 +1,5 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { arbitrum, base, bsc, mainnet, optimism, polygon, sepolia } from "wagmi/chains";
+import { arbitrum, base, mainnet } from "wagmi/chains";
 
 const fallbackProjectId = "11cf43f9159b72fb3a1ca6a26a599305";
 
@@ -12,7 +12,7 @@ if (/^0+$/.test(walletConnectProjectId)) {
   );
 }
 
-const chains = [mainnet, sepolia, polygon, arbitrum, optimism, base, bsc] as const;
+const chains = [mainnet, base, arbitrum] as const;
 
 // RainbowKit provides a helper to create a Wagmi config with sensible defaults
 export const wagmiConfig = getDefaultConfig({
